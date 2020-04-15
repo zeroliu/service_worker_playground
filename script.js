@@ -17,13 +17,16 @@ function registerSW(path) {
 
 function handleClick(e) {
   const path = e.target.dataset.src;
-  registerSW(path);
-  render();
+  if (path) {
+    registerSW(path);
+    render();
+  }
 }
 
 const swList = [
   'sw.js',
   'install_error_sw.js',
+  'heartbeat_sw.js'
 ];
 
 function render() {
