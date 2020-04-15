@@ -38,6 +38,10 @@ function render() {
 
 function run() {
   if (!('serviceWorker' in navigator)) {
+    const log = document.querySelector('.log');
+    const div = document.createElement('div');
+    div.textContent = 'Service Worker is not supported';
+    log.parentElement.insertBefore(div, log);
     return;
   }
   pickerContainer.addEventListener('click', handleClick);
