@@ -1,0 +1,58 @@
+<html>
+<title>Service Worker Playground</title>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .container {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    height: 100vh;
+    padding: 10px;
+    max-width: 1000px;
+  }
+
+  .container>h1 {
+    margin: 10px;
+  }
+
+  .sw-picker {
+    display: flex;
+    width: 100%;
+  }
+
+  .sw-picker>button {
+    border: 1px solid rgba(0, 0, 0, .5);
+    background: white;
+    padding: 5px;
+    font-size: 15px;
+    flex-basis: 150px;
+    margin: 10px;
+  }
+
+  .sw-picker>button.selected {
+    background: #4daffa99;
+  }
+
+
+  .log {
+    border: none;
+    flex: 1 1 auto;
+    width: 100%;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <h1>Service worker playground</h1>
+    <div class="sw-picker"></div>
+    <iframe class="log" src="https://logger.zeroliu.com"></iframe>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
