@@ -23,6 +23,7 @@
   .sw-picker {
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
   }
 
   button {
@@ -46,19 +47,30 @@
 
   .actions {
     display: flex;
+    flex: 1;
+    margin-left: 10px;
   }
 
   .actions>button {
     border-radius: 10px;
   }
+
+  .container>header {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+  }
 </style>
 
 <body>
   <div class="container">
-    <h1>Service worker playground</h1>
-    <div class="actions">
-      <button class="ping-action">Ping</button>
-    </div>
+    <header>
+      <h1>Service worker playground</h1>
+      <div class="actions">
+        <button class="ping-action">Ping</button>
+        <button class="message-action">Message</button>
+      </div>
+    </header>
     <div class="sw-picker"></div>
     <iframe class="log" src="https://simple-logging-367da.web.app"></iframe>
   </div>

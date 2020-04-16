@@ -1,5 +1,20 @@
 const pickerContainer = document.querySelector('.sw-picker');
 const pingBtn = document.querySelector('.ping-action');
+const messageBtn = document.querySelector('.message-action');
+
+const swList = [
+  'sw.js',
+  'heartbeat_sw.js',
+  'heartbeat_wait_until_sw.js',
+  'install_error_sw.js',
+  'blocking_install_error_sw.js',
+  'activate_error_sw.js',
+  'blocking_activate_error_sw.js',
+  'message_error_sw.js',
+  'blocking_message_error_sw.js',
+  'fetch_error_sw.js',
+  'blocking_fetch_error_sw.js',
+];
 
 function registerSW(path) {
   localStorage.setItem('currentSW', path);
@@ -17,15 +32,12 @@ function handleClick(e) {
 }
 
 function ping() {
-  fetch('ping');
+  fetch('ping').then(console.log);
 }
 
-const swList = [
-  'sw.js',
-  'install_error_sw.js',
-  'heartbeat_sw.js',
-  'heartbeat_wait_until_sw.js'
-];
+function message() {
+  navigator.serviceWorker.controller.postMessage('post message from client');
+}
 
 function render() {
   let currentSW = localStorage.getItem('currentSW');
@@ -47,6 +59,7 @@ function run() {
   }
   pickerContainer.addEventListener('click', handleClick);
   pingBtn.addEventListener('click', ping);
+  messageBtn.addEventListener('click', message);
   render();
 }
 

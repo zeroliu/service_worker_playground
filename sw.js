@@ -16,3 +16,7 @@ self.addEventListener('activate', (evt) => {
 self.addEventListener('fetch', (evt) => {
   evt.waitUntil(log(`[ServiceWorker] Fetch ${evt.request.url}`));
 });
+
+self.addEventListener('message', (evt) => {
+  evt.waitUntil(log(`[ServiceWorker] Message ${evt.data}`));
+});
