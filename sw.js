@@ -3,6 +3,7 @@
 importScripts('logger.js');
 
 self.addEventListener('install', (evt) => {
+  console.log(evt);
   evt.waitUntil(log('[ServiceWorker] Install'));
   self.skipWaiting();
 });
