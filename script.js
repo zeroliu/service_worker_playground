@@ -1,19 +1,5 @@
 const pickerContainer = document.querySelector('.sw-picker');
-
-function log(text) {
-  console.log(text);
-  const body = JSON.stringify({
-    ua: self.navigator.userAgent,
-    text,
-  });
-  fetch('https://us-central1-simple-logging-367da.cloudfunctions.net/log', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body,
-  });
-}
+const pingBtn = document.querySelector('.ping-action');
 
 function registerSW(path) {
   localStorage.setItem('currentSW', path);
@@ -28,6 +14,10 @@ function handleClick(e) {
     registerSW(path);
     render();
   }
+}
+
+function ping() {
+  fetch('ping');
 }
 
 const swList = [
@@ -56,6 +46,7 @@ function run() {
     return;
   }
   pickerContainer.addEventListener('click', handleClick);
+  pingBtn.addEventListener('click', ping);
   render();
 }
 

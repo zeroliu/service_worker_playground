@@ -25,7 +25,7 @@
     width: 100%;
   }
 
-  .sw-picker>button {
+  button {
     border: 1px solid rgba(0, 0, 0, .5);
     background: white;
     padding: 5px;
@@ -38,20 +38,31 @@
     background: #4daffa99;
   }
 
-
   .log {
     border: none;
     flex: 1 1 auto;
     width: 100%;
+  }
+
+  .actions {
+    display: flex;
+  }
+
+  .actions>button {
+    border-radius: 10px;
   }
 </style>
 
 <body>
   <div class="container">
     <h1>Service worker playground</h1>
+    <div class="actions">
+      <button class="ping-action">Ping</button>
+    </div>
     <div class="sw-picker"></div>
     <iframe class="log" src="https://simple-logging-367da.web.app"></iframe>
   </div>
+  <script src="logger.js"></script>
   <script src="script.js"></script>
 </body>
 

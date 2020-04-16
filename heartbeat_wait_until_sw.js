@@ -9,11 +9,13 @@ self.addEventListener('install', (evt) => {
 
 self.addEventListener('activate', (evt) => {
   evt.waitUntil(log('[heartbeat wait until sw] Activate'));
-  const ping = () => new Promise(resolve => setInterval(() => log('[heartbeat wait until sw] ping!'), 5000));
-  evt.waitUntil(ping());
   self.clients.claim();
 });
 
 self.addEventListener('fetch', (evt) => {
   evt.waitUntil(log(`[heartbeat wait until sw] Fetch ${evt.request.url}`));
+  if (evt.request.url.includes('ping')) {
+    const ping = () => new Promise(resolve => setInterval(() => log('[heartbeat wait until sw] ping!'), 5000));
+    evt.waitUntil(ping());
+  }
 });
