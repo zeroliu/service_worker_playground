@@ -4,7 +4,7 @@ function log(text) {
     ua: self.navigator.userAgent,
     text,
   });
-  return fetch('https://us-central1-simple-logging-de455.cloudfunctions.net/log', {
+  return fetch('https://us-central1-simple-logging-367da.cloudfunctions.net/log', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
