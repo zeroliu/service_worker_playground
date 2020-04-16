@@ -9,7 +9,6 @@ function log(text) {
     headers: {
       'Content-Type': 'application/json',
     },
-    mode: 'no-cors',
     body,
   });
 }
