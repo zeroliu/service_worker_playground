@@ -9,8 +9,7 @@ self.addEventListener('install', (evt) => {
 
 self.addEventListener('activate', (evt) => {
   evt.waitUntil(log('[heartbeat sw] Activate'));
-  const ping = () => new Promise(resolve => setInterval(() => log('[heartbeat sw] ping!'), 5000));
-  evt.waitUntil(ping());
+  setInterval(() => log('[heartbeat sw] ping!'), 5000);
   self.clients.claim();
 });
 

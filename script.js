@@ -33,7 +33,8 @@ function handleClick(e) {
 const swList = [
   'sw.js',
   'install_error_sw.js',
-  'heartbeat_sw.js'
+  'heartbeat_sw.js',
+  'heartbeat_wait_until_sw.js'
 ];
 
 function render() {
