@@ -23,3 +23,7 @@ self.addEventListener('message', (evt) => {
 self.addEventListener('sync', (evt) => {
   evt.waitUntil(log(`[ServiceWorker] Sync ${evt.tag}`));
 })
+
+self.addEventListener('push', evt => {
+  evt.waitUntil(log(`[ServiceWorker] Push received`));
+});
