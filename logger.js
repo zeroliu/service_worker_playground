@@ -1,4 +1,5 @@
 const cache = [];
+const url = 'https://us-central1-simple-logging-367da.cloudfunctions.net/log';
 
 function debounce(callback) {
   let timeoutId = -1;
@@ -21,7 +22,7 @@ function debounce(callback) {
 function sendLog() {
   const body = JSON.stringify(Array.from(cache));
   cache.length = 0;
-  return fetch('https://us-central1-simple-logging-367da.cloudfunctions.net/log', {
+  return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -40,4 +41,10 @@ function log(text) {
   };
   cache.push(body);
   return debouncedSendLog();
+}
+
+function delayPing(timeout) {
+  const endpoint = new URL(`${url}/delay`);
+  endpoint.searchParams.append('time', timeout);
+  return fetch(endpoint);
 }

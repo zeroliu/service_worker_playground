@@ -13,7 +13,7 @@ self.addEventListener('activate', (evt) => {
   self.clients.claim();
 });
 
-self.addEventListener('blocking message', (evt) => {
+self.addEventListener('message', (evt) => {
   evt.waitUntil(log(`[blocking message error] Message ${evt.data}`));
   evt.waitUntil(Promise.reject('message error'));
 });

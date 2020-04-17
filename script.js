@@ -1,6 +1,7 @@
 const pickerContainer = document.querySelector('.sw-picker');
 const pingBtn = document.querySelector('.ping-action');
 const messageBtn = document.querySelector('.message-action');
+const syncBtn = document.querySelector('.sync-action');
 
 const swList = [
   'sw.js',
@@ -14,6 +15,9 @@ const swList = [
   'blocking_message_error_sw.js',
   'fetch_error_sw.js',
   'blocking_fetch_error_sw.js',
+  'sync_error_sw.js',
+  'blocking_sync_error_sw.js',
+  'sync_offline_sw.js',
 ];
 
 function registerSW(path) {
@@ -39,6 +43,11 @@ function message() {
   navigator.serviceWorker.controller.postMessage('post message from client');
 }
 
+async function sync() {
+  const registration = await navigator.serviceWorker.ready;
+  registration.sync.register('sw-sync');
+}
+
 function render() {
   let currentSW = localStorage.getItem('currentSW');
   if (!currentSW) {
@@ -60,6 +69,7 @@ function run() {
   pickerContainer.addEventListener('click', handleClick);
   pingBtn.addEventListener('click', ping);
   messageBtn.addEventListener('click', message);
+  syncBtn.addEventListener('click', sync);
   render();
 }
 

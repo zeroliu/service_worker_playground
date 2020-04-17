@@ -3,7 +3,6 @@
 importScripts('logger.js');
 
 self.addEventListener('install', (evt) => {
-  console.log(evt);
   evt.waitUntil(log('[ServiceWorker] Install'));
   self.skipWaiting();
 });
@@ -20,3 +19,7 @@ self.addEventListener('fetch', (evt) => {
 self.addEventListener('message', (evt) => {
   evt.waitUntil(log(`[ServiceWorker] Message ${evt.data}`));
 });
+
+self.addEventListener('sync', (evt) => {
+  evt.waitUntil(log(`[ServiceWorker] Sync ${evt.tag}`));
+})
