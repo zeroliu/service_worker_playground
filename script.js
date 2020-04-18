@@ -2,6 +2,8 @@ const pickerContainer = document.querySelector('.sw-picker');
 const pingBtn = document.querySelector('.ping-action');
 const messageBtn = document.querySelector('.message-action');
 const syncBtn = document.querySelector('.sync-action');
+const pushBtn = document.querySelector('.push-action');
+const publicVapidKey = 'BC63NYuMHo5IApDXPU8xeuGJHrHCRR70b1lCVaGPase-PkaEnX4k3ogxBolw0WTWEydspId0uwKQxQSoVylJIfQ';
 
 const swList = [
   'sw.js',
@@ -24,6 +26,15 @@ function registerSW(path) {
   localStorage.setItem('currentSW', path);
   navigator.serviceWorker.register(path).then(reg => {
     log(`${path} is registered`);
+    reg.pushManager.getSubscription().then(function (sub) {
+      if (sub === null) {
+        // Update UI to ask user to register for Push
+        console.log('Not subscribed to push service!');
+      } else {
+        // We have a subscription, update the database
+        console.log('Subscription object: ', sub);
+      }
+    });
   });
 }
 
@@ -41,6 +52,41 @@ function ping() {
 
 function message() {
   navigator.serviceWorker.controller.postMessage('post message from client');
+}
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/\-/, '+').replace(/\_/g, '/');
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+async function subscribeUser() {
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+    });
+    console.log('Endpoint URL: ', sub.endpoint);
+    fetch('https://us-central1-simple-logging-367da.cloudfunctions.net/log/subscribe', {
+      method: 'POST',
+      body: JSON.stringify(sub),
+      headers: {
+        'content-type': 'application/json',
+      }
+    });
+  } catch (e) {
+    if (Notification.permission === 'denied') {
+      console.warn('Permission for notifications was denied');
+    } else {
+      console.error('Unable to subscribe to push', e);
+    }
+  }
 }
 
 async function sync() {
@@ -70,6 +116,7 @@ function run() {
   pingBtn.addEventListener('click', ping);
   messageBtn.addEventListener('click', message);
   syncBtn.addEventListener('click', sync);
+  pushBtn.addEventListener('click', subscribeUser);
   render();
 }
 
