@@ -112,6 +112,20 @@ function run() {
     log.parentElement.insertBefore(div, log);
     return;
   }
+  let currentSW = localStorage.getItem('currentSW');
+  if (!currentSW) {
+    currentSW = swList[0];
+  }
+  window.addEventListener('load', function () {
+    console.log('window loaded');
+    registerSW(currentSW);
+  });
+  window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded');
+  })
+  navigator.serviceWorker.addEventListener('message', evt => {
+    console.log(evt.data);
+  });
   pickerContainer.addEventListener('click', handleClick);
   pingBtn.addEventListener('click', ping);
   messageBtn.addEventListener('click', message);

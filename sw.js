@@ -3,6 +3,7 @@
 importScripts('logger.js');
 
 self.addEventListener('install', (evt) => {
+  console.log('v2');
   evt.waitUntil(log('[ServiceWorker] Install'));
   self.skipWaiting();
 });
@@ -17,7 +18,16 @@ self.addEventListener('fetch', (evt) => {
 });
 
 self.addEventListener('message', (evt) => {
+  console.log(evt);
   evt.waitUntil(log(`[ServiceWorker] Message ${evt.data}`));
+  setTimeout(() => {
+    self.clients.matchAll().then(clients => {
+      console.log(clients);
+      for (const client of clients) {
+        client.postMessage({msg: 'Hello from SW'});
+      }
+    });
+  }, 5000);
 });
 
 self.addEventListener('sync', (evt) => {
